@@ -60,7 +60,8 @@
             "Request" :
             [
                 "deposit|1.1.1|1|56",
-                "getBalance|1.1.2|1"
+                "getBalance|1.1.2|1",
+                "withdraw|1.1.8|1|20"
             ]
         },
         {

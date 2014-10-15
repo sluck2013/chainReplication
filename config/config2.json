@@ -83,21 +83,25 @@
             "Request" :
             [
                 "withdraw|1.1.1|1|56",
-                "getBalance|1.1.1|2"
+                "deposit|1.1.1|1|2"
             ]
         },
         {
             "ClientID" : "2",
             "Request" :
             [
-                "getBalance|1.2.1|2"
+                "getBalance|1.2.1|2",
+                "deposit|1.2.2|2|54",
+                "deposit|1.2.4|2|55"
             ]
         },
         {
             "ClientID" : "3",
             "Request" :
             [
-                "getBalance|1.2.1|2"
+                "getBalance|1.2.3|2",
+                "getBalance|1.2.1|2",
+                "withdraw|1.2.4|6"
             ]
         }
     ]

@@ -1,5 +1,6 @@
-config1.json  normal cases and single server
-config2.json  InconsistentWithHistory
-config3.json  repeating transaction
-config4.json  resent request
-config5.json  insufficient funds
+filename # minServerId # maxServerId # description
+config1.json  1  4     successful deposit/withdraw/getBalance and 1 / multiple servers per bank
+config2.json  1  6     InconsistentWithHistory for withdraw/deposit/getBalance
+config3.json  1  2     repeating transactions by differnt clients
+config4.json  1  2     request retransmission
+config5.json  1  3     insufficient funds

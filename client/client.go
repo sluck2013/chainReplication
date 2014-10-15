@@ -54,7 +54,7 @@ func sendRequest(listenPort, reqMsg, bankId, clientId string) {
  * send request result to parent thread, clientId is the ClientID
  * of the client being started.
  */
-func startClient(ch chan reply.Reply, clientId string) {
+func startClient(ch chan reply.Reply, closed chan bool, clientId string) {
     myLogger.Info.Println("Client thread started up. ClientID:", clientId)
     la := net.UDPAddr {
         Port : 0,
@@ -80,6 +80,11 @@ func startClient(ch chan reply.Reply, clientId string) {
             bankId := strings.Split(reqId, ".")[0]
             sendRequest(listenPort, req, bankId, clientId)
             reqIdx++
+        } else {
+            closed <- true
+            conn.Close()
+            myLogger.Info.Println("Connection closed! ClientID:", clientId)
+            return
         }
         buf := make([]byte, MSGLEN)
         n, _, err := conn.ReadFromUDP(buf)
@@ -123,18 +128,28 @@ func main() {
     
     configure.LoadConfig("config/" + os.Args[1])
     channel := make(chan reply.Reply)
+    closed := make(chan bool)
     
     for k := range configure.Requests {
-        go startClient(channel, k)
+        go startClient(channel, closed, k)
     }
 
+    closedClientNum := 0
     for {
         select {
             case r := <- channel:
+                fmt.Println("")
                 fmt.Println("RequestID:", r.RequestId)
                 fmt.Println("Account#:", r.AccountNum)
                 fmt.Println("Outcome:", r.Outcome.String())
                 fmt.Println("Balance:", r.Balance)
+            case c := <- closed:
+                if c {
+                    closedClientNum++
+                }
+                if closedClientNum == len(configure.Requests) {
+                    return
+                }
         }
     }
 }

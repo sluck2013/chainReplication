@@ -37,13 +37,15 @@
             "Request" :
             [
                 "deposit|1.1.1|1|56",
-                "getBalance|1.1.1|2"
+                "getBalance|1.1.2|2",
+                "deposit|1.1.3|1|28"
             ]
         },
         {
             "ClientID" : "2",
             "Request" :
             [
+                "getBalance|1.1.4|1",
                 "deposit|1.1.1|56"
             ]
         }
